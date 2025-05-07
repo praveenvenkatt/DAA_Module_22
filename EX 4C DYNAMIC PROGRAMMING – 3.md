@@ -1,52 +1,61 @@
-# EX 4B DYNAMIC PROGRAMMING – 2
-## AIM:
-To find the longest string (or strings) that is a substring (or are substrings) of two strings..
+# EX 4C DYNAMIC PROGRAMMING – 3
 
+## DATE :
 
+## AIM :
 
-## Algorithm
-1. Create a table lookup to store lengths of matching characters.
-2. Compare each character of X with each character of Y.
-3. If characters match, update the lookup value and track the maximum length and ending position.
-4. After filling the table, the longest common substring is found at the tracked position.
-5. Extract and print the substring from X using the recorded indices.  
+Given a sequence, find the length of the longest palindromic subsequence in it.
 
-## Program:
+## Algorithm :
+
+1.Input the string → Take the string for which you want to find the longest palindromic subsequence.
+
+2.Create a 2D table (dp) → dp[i][j] will store the length of the LPS between index i and j in the string.
+
+3.Initialize → Set all dp[i][i] = 1 because a single character is always a palindrome of length 1.
+
+4.Check substrings of length 2 or more.
+
+5.For every substring:If the characters at the start and end are the same:dp[i][j] = dp[i+1][j-1] + 2
+
+6.If they are different:dp[i][j] = max(dp[i+1][j], dp[i][j-1])
+
+7.The value in dp[0][n-1] (first to last index) is the length of the Longest Palindromic Subsequence.
+
+8.Print the result. 
+
+## Program :
+
+### Developed by: Praveen V
+### Register Number: 212222040121
+
 ```
-/*
-Program to implement the longest common substring problem
+def Lps(X):
+    n=len(X)
+    dp=[[0 for _ in range(n)] for _ in range(n)]
+    
+    for x in range(n):
+        dp[x][x]=1
+        
+    for l in range(2,n+1):
+        for i in range(n-l+1):
+            j=i+l-1
+            if X[i]==X[j]:
+                dp[i][j]=dp[i+1][j-1]+2
+            else:
+                dp[i][j]=max(dp[i+1][j],dp[i][j-1])
+    return dp[0][n-1]
+    
+X=input()
+print("The length of the LPS is",Lps(X))
 
-.
-Developed by: Praveen V
-Register Number: 212222040121
-*/
-```
-```
-def LCS(X, Y, m, n):
-    maxLength = 0
-    endingIndex = m
-    lookup = [[0 for x in range(n + 1)] for y in range(m + 1)]
-    for i in range(1, m + 1):
-        for j in range(1, n + 1):
-            if X[i - 1] == Y[j - 1]:
-                lookup[i][j] = lookup[i - 1][j - 1] + 1
-                if lookup[i][j] > maxLength:
-                    maxLength = lookup[i][j]
-                    endingIndex = i
-    return X[endingIndex - maxLength: endingIndex]
-
-X = input()
-Y = input()
-m = len(X)
-n = len(Y)
-print('The longest common substring is', LCS(X, Y, m, n))
 ```
 
-## Output:
-![image](https://github.com/user-attachments/assets/69731d23-7375-4146-9b23-51e606c7cd61)
+## Output :
+
+![image](https://github.com/user-attachments/assets/594ae1ec-5eee-46f3-b64d-d7f30d38388d)
 
 
+## Result :
 
-
-## Result:
-Thus the program was executed successfully for finding the longest common substring .
+Thus the program was executed successfully for finding the length of longest palindromic string.
